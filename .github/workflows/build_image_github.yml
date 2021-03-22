@@ -1,4 +1,3 @@
-name: "构建Github镜像"
 name: DockerHub
 on:
   workflow_dispatch:
