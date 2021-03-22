@@ -2,8 +2,8 @@
 
 ## Author: lan-tianxiang
 ## Source: https://github.com/lan-tianxiang/jd_shell
-## Modified： 2021-02-19
-## Version： v3.9.3
+## Modified： 2021-03-22
+## Version： v3.10.0
 
 ## 路径
 ShellDir=${JD_DIR:-$(cd $(dirname $0); pwd)}
@@ -50,83 +50,82 @@ function Count_UserSum {
 }
 
 ## 组合Cookie和互助码子程序
-function Combin_Sub {
+function Combin_Sub() {
   CombinAll=""
-  for ((i=1; i<=${UserSum}; i++)); do
-    for num in ${TempBlockCookie}; do
-      if [[ $i -eq $num ]]; then
-        continue 2
-      fi
+  if [[ ${AutoHelpOther} == true ]] && [[ $1 == ForOther* ]]; then
+
+    ForOtherAll=""
+    MyName=$(echo $1 | perl -pe "s|ForOther|My|")
+
+    for ((m = 1; m <= ${UserSum}; m++)); do
+      TmpA=${MyName}$m
+      TmpB=${!TmpA}
+      ForOtherAll="${ForOtherAll}@${TmpB}"
     done
-    Tmp1=$1$i
-    Tmp2=${!Tmp1}
-    case $# in
-      1)
-        CombinAll="${CombinAll}&${Tmp2}"
-        ;;
-      2)
-        CombinAll="${CombinAll}&${Tmp2}@$2"
-        ;;
-      3)
-        if [ $(($i % 2)) -eq 1 ]; then
-          CombinAll="${CombinAll}&${Tmp2}@$2"
-        else
-          CombinAll="${CombinAll}&${Tmp2}@$3"
-        fi
-        ;;
-      4)
-        case $(($i % 3)) in
-          1)
-            CombinAll="${CombinAll}&${Tmp2}@$2"
-            ;;
-          2)
-            CombinAll="${CombinAll}&${Tmp2}@$3"
-            ;;
-          0)
-            CombinAll="${CombinAll}&${Tmp2}@$4"
-            ;;
-        esac
-        ;;
-    esac
-  done
-  echo ${CombinAll} | perl -pe "{s|^&||; s|^@+||; s|&@|&|g; s|@+|@|g}"
+
+    for ((n = 1; n <= ${UserSum}; n++)); do
+      for num in ${TempBlockCookie}; do
+        [[ $n -eq $num ]] && continue 2
+      done
+      CombinAll="${CombinAll}&${ForOtherAll}"
+    done
+
+  else
+    for ((i = 1; i <= ${UserSum}; i++)); do
+      for num in ${TempBlockCookie}; do
+        [[ $i -eq $num ]] && continue 2
+      done
+      Tmp1=$1$i
+      Tmp2=${!Tmp1}
+      CombinAll="${CombinAll}&${Tmp2}"
+    done
+  fi
+
+  echo ${CombinAll} | perl -pe "{s|^&||; s|^@+||; s|&@|&|g; s|@+&|&|g; s|@+|@|g; s|@+$||}"
 }
 
-## 组合Cookie、Token与互助码，用户自己的放在前面，我的放在后面
-function Combin_All {
+## 组合Cookie、Token与互助码
+function Combin_All() {
   export JD_COOKIE=$(Combin_Sub Cookie)
+  ## 东东农场(jd_fruit.js)
   export FRUITSHARECODES=$(Combin_Sub ForOtherFruit)
+  ## 东东萌宠(jd_pet.js)
   export PETSHARECODES=$(Combin_Sub ForOtherPet)
+  ## 种豆得豆(jd_plantBean.js)
   export PLANT_BEAN_SHARECODES=$(Combin_Sub ForOtherBean)
-  export DREAM_FACTORY_SHARE_CODES=$(Combin_Sub ForOtherDreamFactory)
+  ## 东东工厂(jd_jdfactory.js)
   export DDFACTORY_SHARECODES=$(Combin_Sub ForOtherJdFactory)
+  ## 京喜工厂(jd_dreamFactory.js)
+  export DREAM_FACTORY_SHARE_CODES=$(Combin_Sub ForOtherDreamFactory)
+  ## 京东赚赚(jd_jdzz.js)
   export JDZZ_SHARECODES=$(Combin_Sub ForOtherJdzz)
+  ## 疯狂的Joy(jd_crazy_joy.js)
   export JDJOY_SHARECODES=$(Combin_Sub ForOtherJoy)
-  export JXNC_SHARECODES=$(Combin_Sub ForOtherJxnc)
-  export JXNCTOKENS=$(Combin_Sub TokenJxnc)
+  ## 口袋书店(jd_bookshop.js)
   export BOOKSHOP_SHARECODES=$(Combin_Sub ForOtherBookShop)
+  ## 签到领现金(jd_cash.js)
   export JD_CASH_SHARECODES=$(Combin_Sub ForOtherCash)
-  export CITY_SHARECODES=$(Combin_Sub ForOtherCity)
-  if [ $[ 10#$(date -u "+%H") ] == 12 ]; then
-    export JDNIANPK_SHARECODES=$(Combin_Sub ForOtherNianPk)
-  else
-    export JDNIANPK_SHARECODES=$(Combin_Sub ForOtherNianPk)
-  fi
-  export JDSXSY_SHARECODES=$(Combin_Sub ForOtherImmortal)
+  ## 京喜农场(jd_jxnc.js)
+  export JXNC_SHARECODES=$(Combin_Sub ForOtherJxnc)
+  ## 闪购盲盒(jd_sgmh.js)
   export JDSGMH_SHARECODES=$(Combin_Sub ForOtherSgmh)
-  export JSMOBILEFESTIVAL_SHARECODES=$(Combin_Sub ForOtherJdMobileFestival)
-  export JDGLOBAL_SHARECODES=$(Combin_Sub ForOtherglobal "MjNtTnVxbXJvMGlWTHc5Sm9kUXZ3VUM4R241aDFjblhybHhTWFYvQmZUOD0=@d3BQNG5LdEEya1U3Z0I5dllCMDEydz09@bHkwdDhtUzV3SDRGWlVtcG54d3gzUT09@Z1dDUTVGem00ZXZzU21JNEhCV3JqUT09@WjZGT1BtUFBlLzZ5UGppVzNCWGlsQT09" "MjNtTnVxbXJvMGlWTHc5Sm9kUXZ3VUM4R241aDFjblhybHhTWFYvQmZUOD0=@d3BQNG5LdEEya1U3Z0I5dllCMDEydz09@bHkwdDhtUzV3SDRGWlVtcG54d3gzUT09@Z1dDUTVGem00ZXZzU21JNEhCV3JqUT09@WjZGT1BtUFBlLzZ5UGppVzNCWGlsQT09" "MjNtTnVxbXJvMGlWTHc5Sm9kUXZ3VUM4R241aDFjblhybHhTWFYvQmZUOD0=@d3BQNG5LdEEya1U3Z0I5dllCMDEydz09@bHkwdDhtUzV3SDRGWlVtcG54d3gzUT09@Z1dDUTVGem00ZXZzU21JNEhCV3JqUT09@WjZGT1BtUFBlLzZ5UGppVzNCWGlsQT09")
+  ## 京喜财富岛(jd_cfd.js)
+  export JDCFD_SHARECODES=$(Combin_Sub ForOtherCfd)
+  ## 环球挑战赛(jd_global.js)
+  export JDGLOBAL_SHARECODES=$(Combin_Sub ForOtherGlobal)
+  ## 城城领现金(jd_city.js)
+  export CITY_SHARECODES=$(Combin_Sub ForOtherCity)
 }
 
 ## 转换JD_BEAN_SIGN_STOP_NOTIFY或JD_BEAN_SIGN_NOTIFY_SIMPLE
-function Trans_JD_BEAN_SIGN_NOTIFY {
+function Trans_JD_BEAN_SIGN_NOTIFY() {
   case ${NotifyBeanSign} in
-    0)
-      export JD_BEAN_SIGN_STOP_NOTIFY="true"
-      ;;
-    1)
-      export JD_BEAN_SIGN_NOTIFY_SIMPLE="true"
-      ;;
+  0)
+    export JD_BEAN_SIGN_STOP_NOTIFY="true"
+    ;;
+  1)
+    export JD_BEAN_SIGN_NOTIFY_SIMPLE="true"
+    ;;
   esac
 }
 
@@ -143,21 +142,15 @@ function Set_Env {
   Trans_UN_SUBSCRIBES
 }
 
-## 随机延迟子程序
-function Random_DelaySub {
-  CurDelay=$((${RANDOM} % ${RandomDelay} + 1))
-  echo -e "\n命令未添加 \"now\"，随机延迟 ${CurDelay} 秒后再执行任务，如需立即终止，请按 CTRL+C...\n"
-  sleep ${CurDelay}
-}
 
-## 随机延迟判断
-function Random_Delay {
-  if [ -n "${RandomDelay}" ] && [ ${RandomDelay} -gt 0 ]; then
-    CurMin=$(date "+%M")
-    if [ ${CurMin} -gt 2 ] && [ ${CurMin} -lt 30 ]; then
-      Random_DelaySub
-    elif [ ${CurMin} -gt 31 ] && [ ${CurMin} -lt 59 ]; then
-      Random_DelaySub
+## 随机延迟
+function Random_Delay() {
+  if [[ -n ${RandomDelay} ]] && [[ ${RandomDelay} -gt 0 ]]; then
+    CurMin=$(date "+%-M")
+    if [[ ${CurMin} -gt 2 && ${CurMin} -lt 30 ]] || [[ ${CurMin} -gt 31 && ${CurMin} -lt 59 ]]; then
+      CurDelay=$((${RANDOM} % ${RandomDelay} + 1))
+      echo -e "\n命令未添加 \"now\"，随机延迟 ${CurDelay} 秒后再执行任务，如需立即终止，请按 CTRL+C...\n"
+      sleep ${CurDelay}
     fi
   fi
 }
