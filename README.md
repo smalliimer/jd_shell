@@ -30,7 +30,8 @@ wget -q https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/linux
 wget -q https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/docker_install_jd.sh -O docker_install_jd.sh && chmod +x docker_install_jd.sh && ./docker_install_jd.sh
 ```
 
-## Linux部署时会有
+
+Linux部署时会有
 
 +----------------- 开 始 执 行 更 新 脚 本 -----------------+
 
@@ -43,7 +44,7 @@ wget -q https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/docke
 的提示，记得记住你脚本的目录，Wiki中的命令都需要进入目录中运行才可生效！！！！！！！！！！
 以上面的例子来说，进入目录命令为
 ```shell
-cd /home/jd/scripts
+cd /home/jd/
 ```
 
 
