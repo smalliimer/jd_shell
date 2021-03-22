@@ -126,8 +126,9 @@ function Cat_Scodes() {
 
 ## 汇总
 function Cat_All() {
-  echo -e "\n从最后一个日志提取互助码，受日志内容影响，仅供参考。"
-  echo -e "\n用法： 将以下内容直接复制到config.sh的最后面专区中！！！"
+  echo -e "\n# 从最后一个日志提取互助码，受日志内容影响，仅供参考。"
+  echo -e "\n# 用法： 检查无误后，将以下内容直接复制到config.sh的最后面专区中！！！"
+  echo -e "\n################################" 
   for ((i = 0; i < ${#Name1[*]}; i++)); do
     echo -e "\n# ${Name2[i]}："
     [[ $(Cat_Scodes "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码") == ${Tips} ]] && Cat_Scodes "${Name1[i]}" "${Name3[i]}" || Cat_Scodes "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码"
