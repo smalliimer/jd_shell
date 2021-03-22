@@ -5,7 +5,7 @@ on:
     branches: 
       - v3
   schedule:
-    - cron: '0 21 * * *'
+    - cron: '0 9 * * *'
 
 jobs:
   docker:
@@ -32,4 +32,4 @@ jobs:
           context: ./docker/
           platforms: linux/amd64,linux/arm64/v8,linux/arm/v7,linux/arm/v6,linux/ppc64le,linux/s390x
           push: true
-          tags: thisispatrick/jd-base:v3
+          tags: lantianxiang1/jd_shell:v3
