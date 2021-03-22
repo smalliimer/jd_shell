@@ -71,6 +71,37 @@ function Cat_Scodes() {
       fi
     done
 
+## 导出临时互助码程序
+function Cat_Scodes2() {
+  if [ -d ${LogDir}/jd_$1 ] && [[ $(ls ${LogDir}/jd_$1) != "" ]]; then
+    cd ${LogDir}/jd_$1
+
+    ## 导出助力码变量（My）
+    for log in $(ls -r); do
+      case $# in
+      2)
+        codes=$(cat ${log} | grep -${Opt} "开始【京东账号|您的(好友)?助力码为" | uniq | perl -0777 -pe "{s|\*||g; s|开始||g; s|\n好友助力码(：)?:?|：|g; s|，.+||g}" | sed -r "s/【京东账号/My$2/;s/】.*?：/='/;s/】.*?/='/;s/$/'/;s/\(每次运行都变化,不影响\)//")
+        ;;
+      3)
+        codes=$(grep -${Opt} $3 ${log} | uniq | sed -r "s/【京东账号/My$2/;s/（.*?】/='/;s/$/'/")
+        ;;
+      esac
+      if [[ ${codes} ]]; then
+        ## 添加判断，若未找到该用户互助码，则设置为空值
+        for ((user_num = 1; user_num <= ${UserSum}; user_num++)); do
+          echo -e "${codes}" | grep -${Opt}q "My$2${user_num}="
+          if [ $? -eq 1 ]; then
+            if [ $user_num == 1 ]; then
+              codes=$(echo "${codes}" | sed -r "1i My${2}1=''")
+            else
+              codes=$(echo "${codes}" | sed -r "/My$2$(expr ${user_num} - 1)=/a\My$2${user_num}=''")
+            fi
+          fi
+        done
+        break
+      fi
+    done
+
     ## 导出为他人助力变量（ForOther）
     if [[ ${codes} ]]; then
       help_code=""
@@ -132,6 +163,7 @@ function Cat_All() {
   for ((i = 0; i < ${#Name1[*]}; i++)); do
     echo -e "\n# ${Name2[i]}："
     [[ $(Cat_Scodes "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码") == ${Tips} ]] && Cat_Scodes "${Name1[i]}" "${Name3[i]}" || Cat_Scodes "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码"
+    [[ $(Cat_Scodes2 "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码") == ${Tips} ]] && Cat_Scodes2 "${Name1[i]}" "${Name3[i]}" || Cat_Scodes2 "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码"
   done
 }
 
