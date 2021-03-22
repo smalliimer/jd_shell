@@ -13,9 +13,9 @@ Tips="从日志中未找到任何互助码"
 
 ## 所有有互助码的活动，只需要把脚本名称去掉前缀 jd_ 后列在 Name1 中，将其中文名称列在 Name2 中，对应 config.sh 中互助码后缀列在 Name3 中即可。
 ## Name1、Name2 和 Name3 中的三个名称必须一一对应。
-Name1=(fruit pet plantBean dreamFactory jdfactory crazy_joy jdzz jxnc bookshop cash sgmh cfd global)
-Name2=(东东农场 东东萌宠 京东种豆得豆 京喜工厂 东东工厂 crazyJoy任务 京东赚赚 京喜农场 口袋书店 签到领现金 闪购盲盒 京喜财富岛 环球挑战赛)
-Name3=(Fruit Pet Bean DreamFactory JdFactory Joy Jdzz Jxnc BookShop Cash Sgmh Cfd Global)
+Name1=(fruit pet plantBean dreamFactory jdfactory crazy_joy jdzz jxnc bookshop cash sgmh cfd global city)
+Name2=(东东农场 东东萌宠 京东种豆得豆 京喜工厂 东东工厂 crazyJoy任务 京东赚赚 京喜农场 口袋书店 签到领现金 闪购盲盒 京喜财富岛 环球挑战赛 城城领现金)
+Name3=(Fruit Pet Bean DreamFactory JdFactory Joy Jdzz Jxnc BookShop Cash Sgmh Cfd Global City)
 
 ## 导入 config.sh
 function Import_Conf() {
@@ -127,8 +127,9 @@ function Cat_Scodes() {
 ## 汇总
 function Cat_All() {
   echo -e "\n从最后一个日志提取互助码，受日志内容影响，仅供参考。"
+  echo -e "\n用法： 将以下内容直接复制到config.sh的最后面专区中！！！"
   for ((i = 0; i < ${#Name1[*]}; i++)); do
-    echo -e "\n${Name2[i]}："
+    echo -e "\n# ${Name2[i]}："
     [[ $(Cat_Scodes "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码") == ${Tips} ]] && Cat_Scodes "${Name1[i]}" "${Name3[i]}" || Cat_Scodes "${Name1[i]}" "${Name3[i]}" "的${Name2[i]}好友互助码"
   done
 }
