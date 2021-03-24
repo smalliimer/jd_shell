@@ -82,7 +82,7 @@ function Combin_Sub() {
     done
   fi
 
-  echo perl -pe "{s|^&||; s|^@+||; s|&@|&|g; s|@+&|&|g; s|@+|@|g; s|@+$||}" | ${CombinAll}
+  echo ${CombinAll} | perl -pe "{s|^&||; s|^@+||; s|&@|&|g; s|@+&|&|g; s|@+|@|g; s|@+$||}"
 }
 
 ## 组合Cookie、Token与互助码
