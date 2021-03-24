@@ -28,9 +28,6 @@
 Cookie1=""
 Cookie2=""
 Cookie3=""
-Cookie4=""
-Cookie5=""
-Cookie6=""
 
 
 ################################## 临时屏蔽某个Cookie（选填） ##################################
@@ -167,175 +164,106 @@ NotifyBeanSign=""
 export JD_BEAN_STOP=""
 
 
+## ---------------------------------- 手 动 填 写 互 助 码 区 域 （不推荐！） ----------------------------------
+## 以下为互助码的手动填写区域，为特定活动或临时活动填写的地方。现已可一键自动生成，只需运行export_sharecodes.sh按提示操作即可。
+
 ################################## 1. 定义东东农场互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyFruit1=""
 MyFruit2=""
-MyFruit3=""
-MyFruit4=""
-MyFruit5=""
-MyFruit6=""
 MyFruitA=""
 MyFruitB=""
 
 ForOtherFruit1=""
 ForOtherFruit2=""
-ForOtherFruit3=""
-ForOtherFruit4=""
-ForOtherFruit5=""
-ForOtherFruit6=""
 
 
 ################################## 2. 定义东东萌宠互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyPet1=""
 MyPet2=""
-MyPet3=""
-MyPet4=""
-MyPet5=""
-MyPet6=""
 MyPetA=""
 MyPetB=""
 
 ForOtherPet1=""
 ForOtherPet2=""
-ForOtherPet3=""
-ForOtherPet4=""
-ForOtherPet5=""
-ForOtherPet6=""
 
 
 ################################## 3. 定义种豆得豆互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyBean1=""
 MyBean2=""
-MyBean3=""
-MyBean4=""
-MyBean5=""
-MyBean6=""
 MyBeanA=""
 MyBeanB=""
 
 ForOtherBean1=""
 ForOtherBean2=""
-ForOtherBean3=""
-ForOtherBean4=""
-ForOtherBean5=""
-ForOtherBean6=""
 
 
 ################################## 4. 定义东东工厂互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyJdFactory1=""
 MyJdFactory2=""
-MyJdFactory3=""
-MyJdFactory4=""
-MyJdFactory5=""
-MyJdFactory6=""
 MyJdFactoryA=""
 MyJdFactoryB=""
 
 ForOtherJdFactory1=""
 ForOtherJdFactory2=""
-ForOtherJdFactory3=""
-ForOtherJdFactory4=""
-ForOtherJdFactory5=""
-ForOtherJdFactory6=""
 
 
 ################################## 5. 定义京喜工厂互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyDreamFactory1=""
 MyDreamFactory2=""
-MyDreamFactory3=""
-MyDreamFactory4=""
-MyDreamFactory5=""
-MyDreamFactory6=""
 MyDreamFactoryA=""
 MyDreamFactoryB=""
 
 ForOtherDreamFactory1=""
 ForOtherDreamFactory2=""
-ForOtherDreamFactory3=""
-ForOtherDreamFactory4=""
-ForOtherDreamFactory5=""
-ForOtherDreamFactory6=""
 
 
 ################################## 6. 定义京东赚赚互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyJdzz1=""
 MyJdzz2=""
-MyJdzz3=""
-MyJdzz4=""
-MyJdzz5=""
-MyJdzz6=""
 MyJdzzA=""
 MyJdzzB=""
 
 ForOtherJdzz1=""
 ForOtherJdzz2=""
-ForOtherJdzz3=""
-ForOtherJdzz4=""
-ForOtherJdzz5=""
-ForOtherJdzz6=""
 
 
 ################################## 7. 定义疯狂的JOY互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyJoy1=""
 MyJoy2=""
-MyJoy3=""
-MyJoy4=""
-MyJoy5=""
-MyJoy6=""
 MyJoyA=""
 MyJoyB=""
 
 ForOtherJoy1=""
 ForOtherJoy2=""
-ForOtherJoy3=""
-ForOtherJoy4=""
-ForOtherJoy5=""
-ForOtherJoy6=""
 
 
 ################################## 8. 定义口袋书店互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyBookShop1=""
 MyBookShop2=""
-MyBookShop3=""
-MyBookShop4=""
-MyBookShop5=""
-MyBookShop6=""
 MyBookShopA=""
 MyBookShopB=""
 
 ForOtherBookShop1=""
 ForOtherBookShop2=""
-ForOtherBookShop3=""
-ForOtherBookShop4=""
-ForOtherBookShop5=""
-ForOtherBookShop6=""
 
 
 ################################## 9. 定义签到领现金互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyCash1=""
 MyCash2=""
-MyCash3=""
-MyCash4=""
-MyCash5=""
-MyCash6=""
 MyCashA=""
 MyCashB=""
 
 ForOtherCash1=""
 ForOtherCash2=""
-ForOtherCash3=""
-ForOtherCash4=""
-ForOtherCash5=""
-ForOtherCash6=""
 
 
 ################################## 10. 定义京喜农场互助（选填） ##################################
@@ -346,95 +274,55 @@ ForOtherCash6=""
 ## 注意：京喜农场 种植种子发生变化的时候，互助码也会变！！
 MyJxnc1=''
 MyJxnc2=''
-MyJxnc3=''
-MyJxnc4=''
-MyJxnc5=''
-MyJxnc6=''
 MyJxncA=''
 MyJxncB=''
 
 ForOtherJxnc1=""
 ForOtherJxnc2=""
-ForOtherJxnc3=""
-ForOtherJxnc4=""
-ForOtherJxnc5=""
-ForOtherJxnc6=""
 
 
 ################################## 11. 定义闪购盲盒互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MySgmh1=""
 MySgmh2=""
-MySgmh3=""
-MySgmh4=""
-MySgmh5=""
-MySgmh6=""
 MySgmhA=""
 MySgmhB=""
 
 ForOtherSgmh1=""
 ForOtherSgmh2=""
-ForOtherSgmh3=""
-ForOtherSgmh4=""
-ForOtherSgmh5=""
-ForOtherSgmh6=""
 
 
 ################################## 12. 定义京喜财富岛互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyCfd1=""
 MyCfd2=""
-MyCfd3=""
-MyCfd4=""
-MyCfd5=""
-MyCfd6=""
 MyCfdA=""
 MyCfdB=""
 
 ForOtherCfd1=""
 ForOtherCfd2=""
-ForOtherCfd3=""
-ForOtherCfd4=""
-ForOtherCfd5=""
-ForOtherCfd6=""
 
 
 ################################## 13. 定义环球挑战赛互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyGlobal1=""
 MyGlobal2=""
-MyGlobal3=""
-MyGlobal4=""
-MyGlobal5=""
-MyGlobal6=""
 MyGlobalA=""
 MyGlobalB=""
 
 ForOtherGlobal1=""
 ForOtherGlobal2=""
-ForOtherGlobal3=""
-ForOtherGlobal4=""
-ForOtherGlobal5=""
-ForOtherGlobal6=""
 
 
 ################################## 14. 定义城城领现金互助（选填） ##################################
 ## 具体填法及要求详见本文件最下方“互助码填法示例”
 MyCity1=""
 MyCity2=""
-MyCity3=""
-MyCity4=""
-MyCity5=""
-MyCity6=""
 MyCityA=""
 MyCityB=""
 
 ForOtherCity1=""
 ForOtherCity2=""
-ForOtherCity3=""
-ForOtherCity4=""
-ForOtherCity5=""
-ForOtherCity6=""
 
 
 ##################################################################################################
@@ -679,7 +567,7 @@ export JD_CITY_EXCHANGE=""
 # ForOtherFruit6="${MyFruit1}@${MyFruit2}@${MyFruit3}@${MyFruitA}@${MyFruit4}@${MyFruit5}@${MyFruitC}"
 
 
-# ---------------------------------- 互 助 码 日 记 复 制 专 区  ----------------------------------
+# ---------------------------------- export_sharecodes.sh 输 出 复 制 专 区  ----------------------------------
 
 
 
