@@ -40,7 +40,7 @@ function Welcome() {
        ;;
     2 )
        echo  "   CentOS/RedHat/Fedora等红帽系"
-       sudo yum update && sudo yum install git wget curl perl nodejs
+       sudo yum update && sudo yum install -y git wget curl perl nodejs
        if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v npm)" ] || [ ! -x "$(command -v git)" ] || [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v wget)" ] || [ ! -x "$(command -v perl)" ]; then
          echo -e "\n依赖未安装完整,请重新运行该脚本且切换良好的网络环境！\n"
          exit 1
@@ -52,7 +52,7 @@ function Welcome() {
        ;;
     3 )
        echo  "   Termux为主的安卓系"
-       pkg upgrade && pkg install git perl nodejs-lts wget curl nano cronie
+       pkg upgrade && pkg install -y git perl nodejs-lts wget curl nano cronie
        if [ ! -x "$(command -v node)" ] || [ ! -x "$(command -v npm)" ] || [ ! -x "$(command -v git)" ] || [ ! -x "$(command -v curl)" ] || [ ! -x "$(command -v wget)" ] || [ ! -x "$(command -v perl)" ]; then
          echo -e "\n依赖未安装完整,请重新运行该脚本且切换良好的网络环境！\n"
          exit 1
