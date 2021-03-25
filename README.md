@@ -20,13 +20,14 @@
 ### 1.Linux 一键部署：
 内有多个环节选择，可退出！
 ```shell
-curl -O linux_install_jd.sh https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/linux_install_jd.sh && chmod +x linux_install_jd.sh && bash linux_install_jd.sh
+wget -q https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/linux_install_jd.sh -O linux_install_jd.sh && chmod +x linux_install_jd.sh && bash linux_install_jd.sh
 ```
+若提示没有安装wget,则安装wget
 
 ### 2. Docker 一键部署单个容器：
 
 ```shell
-curl https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/docker_install_jd.sh && chmod +x docker_install_jd.sh && bash docker_install_jd.sh
+wget -q https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/docker_install_jd.sh -O docker_install_jd.sh && chmod +x docker_install_jd.sh && bash docker_install_jd.sh
 ```
 
 
