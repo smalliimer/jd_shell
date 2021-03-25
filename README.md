@@ -30,26 +30,6 @@ wget -q https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/linux
 wget -q https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/docker_install_jd.sh -O docker_install_jd.sh && chmod +x docker_install_jd.sh && bash docker_install_jd.sh
 ```
 
-
-Linux部署时会有
-
-+----------------- 开 始 执 行 更 新 脚 本 -----------------+
-
-   活动脚本目录：/home/jd/scripts
-
-   当前系统时间：2021-03-22 11:40
-
-+-----------------------------------------------------------+
-
-的提示，记得记住你脚本的目录，Wiki中的命令都需要进入目录中运行才可生效！！！！！！！！！！
-
-以上例来说，则进入目录命令为
-
-```shell
-cd /home/jd/
-```
-
-
 ## 说明
 
 1. 即将推出远程面板功能，需安装数据库php等，非服务器的用户可以忽略
