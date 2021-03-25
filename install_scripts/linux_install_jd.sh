@@ -105,3 +105,4 @@ rm -f ${ShellDir}/${ShellName}
 
 echo -e "\n安装完成！！！！"
 }
+Welcome
