@@ -20,7 +20,7 @@
 ### 1.Linux 一键部署：
 内有多个环节选择，可退出！
 ```shell
-curl https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/linux_install_jd.sh && chmod +x linux_install_jd.sh && bash linux_install_jd.sh
+curl -O linux_install_jd.sh https://cdn.jsdelivr.net/gh/lan-tianxiang/jd_shell/install_scripts/linux_install_jd.sh && chmod +x linux_install_jd.sh && bash linux_install_jd.sh
 ```
 
 ### 2. Docker 一键部署单个容器：
