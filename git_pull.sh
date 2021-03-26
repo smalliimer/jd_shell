@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-## Author: Evine Deng
-## Source: https://github.com/EvineDeng/jd-base
-## Modified： 2021-01-22
+## Author: lan-tianxiang
+## Source: https://github.com/lan-tianxiang/jd_shell
+## Modified： 2021-03-22
 ## Version： v3.6.1
 
 ## 文件路径、脚本网址、文件版本以及各种环境的判断
@@ -28,16 +28,32 @@ ContentNewTask=${ShellDir}/new_task
 ContentDropTask=${ShellDir}/drop_task
 SendCount=${ShellDir}/send_count
 isTermux=${ANDROID_RUNTIME_ROOT}${ANDROID_ROOT}
-WhichDep=$(grep "/jd-base" "${ShellDir}/.git/config")
+WhichDep=$(grep "/jd_shell" "${ShellDir}/.git/config")
 Scripts2URL=https://github.com/lan-tianxiang/jd_scripts
 
 if [[ ${WhichDep} == *github* ]]; then
-  ScriptsURL=https://gitee.com/lxk0301/jd_scripts
+  ScriptsURL=https://gitee.com/highdimen/clone_scripts
   ShellURL=https://github.com/lan-tianxiang/jd_shell
 else
-  ScriptsURL=https://gitee.com/lxk0301/jd_scripts
+  ScriptsURL=https://gitee.com/highdimen/clone_scripts
   ShellURL=https://github.com/lan-tianxiang/jd_shell
 fi
+
+git pull
+
+strAttttt=`grep "url" ${ScriptsDir}/.git/config`
+strBttttt="RikudouPatrickstar"
+if [[ $strAttttt =~ $strBttttt ]]
+then
+ #echo "修复完成"
+ rm -rf ${ScriptsDir}
+else
+ echo "Start"
+ #rm -rf ${ScriptsDir}
+fi
+
+
+
 
 ## 更新shell脚本
 function Git_PullShell {
@@ -51,6 +67,7 @@ function Git_PullShell {
 ## 更新crontab
 function Update_Cron {
   if [ -f ${ListCron} ]; then
+    perl -i -pe "s|5 7,23 19-25 2 .* (.+jd_nzmh\W*.*)|5 7,23 19-25 2 * bash \1|" ${ListCron} # 紧急修复错误的cron
     perl -i -pe "s|30 8-20/4(.+jd_nian\W*.*)|28 8-20/4,21\1|" ${ListCron} # 修改默认错误的cron
     crontab ${ListCron}
   fi
@@ -117,7 +134,7 @@ function Change_JoyRunPins {
     PinALL="${PinTempFormat},${PinALL}"
     let j--
   done
-  PinEvine="Evine,做一颗潇洒的蛋蛋,Evine007,jd_7bb2be8dbd65c,jd_6fae2af082798,jd_664ecc3b78945,277548856_m,米大眼老鼠,"
+  PinEvine="jd_620b506d07889,"
   PinALL="${PinALL}${PinEvine}"
   perl -i -pe "{s|(let invite_pins = \[\")(.+\"\];?)|\1${PinALL}\2|; s|(let run_pins = \[\")(.+\"\];?)|\1${PinALL}\2|}" ${ScriptsDir}/jd_joy_run.js
 }
@@ -171,18 +188,26 @@ function Notify_NewTask {
 
 ## 检测配置文件版本
 function Notify_Version {
+  ## 识别出两个文件的版本号
+  VerConfSample=$(grep " Version: " ${FileConfSample} | perl -pe "s|.+v((\d+\.?){3})|\1|")
+  [ -f ${FileConf} ] && VerConf=$(grep " Version: " ${FileConf} | perl -pe "s|.+v((\d+\.?){3})|\1|")
+
+  ## 删除旧的发送记录文件
   [ -f "${SendCount}" ] && [[ $(cat ${SendCount}) != ${VerConfSample} ]] && rm -f ${SendCount}
+
+  ## 识别出更新日期和更新内容
   UpdateDate=$(grep " Date: " ${FileConfSample} | awk -F ": " '{print $2}')
   UpdateContent=$(grep " Update Content: " ${FileConfSample} | awk -F ": " '{print $2}')
-  if [ -f ${FileConf} ] && [[ "${VerConf}" != "${VerConfSample}" ]] && [[ ${UpdateDate} == $(date "+%Y-%m-%d") ]]
-  then
+
+  ## 如果是今天，并且版本号不一致，则发送通知
+  if [ -f ${FileConf} ] && [[ "${VerConf}" != "${VerConfSample}" ]] && [[ ${UpdateDate} == $(date "+%Y-%m-%d") ]]; then
     if [ ! -f ${SendCount} ]; then
-      echo -e "检测到配置文件config.sh.sample有更新\n\n更新日期: ${UpdateDate}\n当前版本: ${VerConf}\n新的版本: ${VerConfSample}\n更新内容: ${UpdateContent}\n如需使用新功能请对照config.sh.sample，将相关新参数手动增加到你自己的config.sh中，否则请无视本消息。\n" | tee ${ContentVersion}
-      echo -e "本消息只在该新版本配置文件更新当天发送一次，脚本地址：${ShellURL}" >> ${ContentVersion}
+      echo -e "日期: ${UpdateDate}\n版本: ${VerConf} -> ${VerConfSample}\n内容: ${UpdateContent}\n\n" | tee ${ContentVersion}
+      echo -e "如需更新请手动操作，仅更新当天通知一次!" >>${ContentVersion}
       cd ${ShellDir}
       node update.js
       if [ $? -eq 0 ]; then
-        echo "${VerConfSample}" > ${SendCount}
+        echo "${VerConfSample}" >${SendCount}
         [ -f ${ContentVersion} ] && rm -f ${ContentVersion}
       fi
     fi
@@ -320,18 +345,84 @@ function Add_Cron {
   fi
 }
 
+
+## 自定义脚本功能
+function ExtraShell() {
+  ## 自动同步用户自定义的diy.sh
+  EnableExtraShellURL="https://cdn.jsdelivr.net/gh/SuperManito/JD-FreeFuck/diy/diy.sh"
+  if [[ ${EnableExtraShellUpdate} == true ]]; then
+    wget -q $EnableExtraShellURL -O ${FileDiy}
+    if [ $? -eq 0 ]; then
+      echo -e "自定义 DIY 脚本同步完成......"
+      echo -e ''
+      sleep 2s
+    else
+      echo -e "\033[31m自定义 DIY 脚本同步失败！\033[0m"
+      echo -e ''
+      sleep 2s
+    fi
+  fi
+
+  ## 调用用户自定义的diy.sh
+  if [[ ${EnableExtraShell} == true ]]; then
+    if [ -f ${FileDiy} ]; then
+      . ${FileDiy}
+    else
+      echo -e "${FileDiy} 文件不存在，跳过执行自定义 DIY 脚本...\n"
+      echo -e ''
+    fi
+  fi
+}
+
+## 一键执行所有活动脚本
+function Run_All() {
+  ## 临时删除以旧版脚本
+  rm -rf ${ShellDir}/run-all.sh
+  ## 默认将 "jd、jx、jr" 开头的活动脚本加入其中
+  rm -rf ${ShellDir}/run_all.sh
+  bash ${ShellDir}/jd.sh | grep -io 'j[drx]_[a-z].*' | grep -v 'bean_change' >${ShellDir}/run_all.sh
+  sed -i "1i\jd_bean_change.js" ${ShellDir}/run_all.sh ## 置顶京豆变动通知
+  sed -i "s#^#bash ${ShellDir}/jd.sh &#g" ${ShellDir}/run_all.sh
+  sed -i 's#.js# now#g' ${ShellDir}/run_all.sh
+  sed -i '1i\#!/bin/env bash' ${ShellDir}/run_all.sh
+  ## 自定义添加脚本
+  ## 例：echo "bash ${ShellDir}/jd.sh xxx now" >>${ShellDir}/run_all.sh
+
+  ## 将挂机活动移至末尾从而最后执行
+  ## 目前仅有 "疯狂的JOY" 这一个活动
+  ## 模板如下 ：
+  ## cat run_all.sh | grep xxx -wq
+  ## if [ $? -eq 0 ];then
+  ##   sed -i '/xxx/d' ${ShellDir}/run_all.sh
+  ##   echo "bash jd.sh xxx now" >>${ShellDir}/run_all.sh
+  ## fi
+  cat ${ShellDir}/run_all.sh | grep jd_crazy_joy_coin -wq
+  if [ $? -eq 0 ]; then
+    sed -i '/jd_crazy_joy_coin/d' ${ShellDir}/run_all.sh
+    echo "bash ${ShellDir}/jd.sh jd_crazy_joy_coin now" >>${ShellDir}/run_all.sh
+  fi
+
+  ## 去除不想加入到此脚本中的活动
+  ## 例：sed -i '/xxx/d' ${ShellDir}/run_all.sh
+  sed -i '/jd_delCoupon/d' ${ShellDir}/run_all.sh ## 不执行 "京东家庭号" 活动
+  sed -i '/jd_family/d' ${ShellDir}/run_all.sh    ## 不执行 "删除优惠券" 活动
+
+  ## 去除脚本中的空行
+  sed -i '/^\s*$/d' ${ShellDir}/run_all.sh
+  ## 赋权
+  chmod 777 ${ShellDir}/run_all.sh
+}
+
+
 ## 在日志中记录时间与路径
-echo -e "\n--------------------------------------------------------------\n"
-echo -n "系统时间："
-echo $(date "+%Y-%m-%d %H:%M:%S")
-if [ "${TZ}" = "UTC" ]; then
-  echo
-  echo -n "北京时间："
-  echo $(date -d "8 hour" "+%Y-%m-%d %H:%M:%S")
-fi
-echo -e "\nSHELL脚本目录：${ShellDir}\n"
-echo -e "JS脚本目录：${ScriptsDir}\n"
-echo -e "--------------------------------------------------------------\n"
+echo -e ''
+echo -e "+----------------- 开 始 执 行 更 新 脚 本 -----------------+"
+echo -e ''
+echo -e "   活动脚本目录：${ScriptsDir}"
+echo -e ''
+echo -e "   当前系统时间：$(date "+%Y-%m-%d %H:%M")"
+echo -e ''
+echo -e "+-----------------------------------------------------------+"
 
 ## 更新shell脚本、检测配置文件版本并将sample/config.sh.sample复制到config目录下
 Git_PullShell && Update_Cron
@@ -358,9 +449,7 @@ if [ ${ExitStatusShell} -eq 0 ]; then
 fi
 
 ## 执行各函数
-if [[ ${ExitStatusScripts} -eq 0 ]]
-then
-  echo -e "js脚本更新完成...\n"
+if [[ ${ExitStatusScripts} -eq 0 ]]; then
   Change_ALL
   [ -d ${ScriptsDir}/node_modules ] && Notify_Version
   Diff_Cron
@@ -369,17 +458,12 @@ then
   Output_ListJsDrop
   Del_Cron
   Add_Cron
+  ExtraShell
+  Run_All
+  echo -e "活动脚本更新完成......\n"
 else
-  echo -e "js脚本更新失败，请检查原因或再次运行git_pull.sh...\n"
+  echo -e "\033[31m活动脚本更新失败，请检查原因或再次运行 git_pull.sh ......\033[0m"
   Change_ALL
 fi
 
-## 调用用户自定义的diy.sh
-if [ "${EnableExtraShell}" = "true" ]; then
-  if [ -f ${FileDiy} ]
-  then
-    . ${FileDiy}
-  else
-    echo -e "${FileDiy} 文件不存在，跳过执行DIY脚本...\n"
-  fi
-fi
+echo -e "脚本目录：${ShellDir}"
