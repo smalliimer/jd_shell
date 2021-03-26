@@ -465,4 +465,4 @@ else
   Change_ALL
 fi
 
-echo -e "脚本目录：${ScriptsDir}"
+echo -e "脚本目录：${ShellDir}"
