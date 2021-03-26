@@ -348,6 +348,7 @@ function Add_Cron {
 ## 自定义脚本功能
 function ExtraShell() {
   ## 自动同步用户自定义的diy.sh
+  EnableExtraShellURL="https://cdn.jsdelivr.net/gh/SuperManito/JD-FreeFuck/diy/diy.sh"
   if [[ ${EnableExtraShellUpdate} == true ]]; then
     wget -q $EnableExtraShellURL -O ${FileDiy}
     if [ $? -eq 0 ]; then
