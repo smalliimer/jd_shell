@@ -32,16 +32,17 @@ WhichDep=$(grep "/jd_shell" "${ShellDir}/.git/config")
 Scripts2URL=https://github.com/lan-tianxiang/jd_scripts
 
 if [[ ${WhichDep} == *github* ]]; then
-  ScriptsURL=https://github.com/RikudouPatrickstar/jd_scripts
+  ScriptsURL=https://gitee.com/highdimen/clone_scripts
   ShellURL=https://github.com/lan-tianxiang/jd_shell
 else
-  ScriptsURL=https://github.com/RikudouPatrickstar/jd_scripts
+  ScriptsURL=https://gitee.com/highdimen/clone_scripts
   ShellURL=https://github.com/lan-tianxiang/jd_shell
 fi
 
+git pull
 
 strAttttt=`grep "url" ${ScriptsDir}/.git/config`
-strBttttt="lan-tianxiang"
+strBttttt="RikudouPatrickstar"
 if [[ $strAttttt =~ $strBttttt ]]
 then
  #echo "修复完成"
